@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <nav className="flex w-full lg:px-12 lg:py-4 text-white justify-between ">
+    <nav className="flex w-full lg:px-12 lg:py-4 text-white justify-between bg-header-gradient ">
       <div>
         <h1 className="text-2xl font-semibold">
           Form

@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { FaArrowRightLong } from "react-icons/fa6";
 import React from "react";
-
+import Link from "next/link";
 const HomePage = () => {
   return (
-    <div className="flex  mt-[12rem]    text-white  h-screen items-center gap-10 flex-col">
+    <div className="flex pt-[12rem]     text-white  h-screen items-center gap-10 flex-col">
       <button className="text-white animated-button font-semibold">
         <div className="in">
           Introducing <span className="text-amber-400 mx-2">Automator</span>
@@ -26,7 +26,11 @@ const HomePage = () => {
           Start Automating your task{" "}
           <FaArrowRightLong className="transform transition-transform duration-300 translate-y-[2.5px] group-hover:translate-x-2" />{" "}
         </div>{" "}
-        <Button className="rounded-full purple-button mr-2 ">Go to dashboard</Button>
+        <Link href={"/dashboard"}>
+          <Button className="rounded-full purple-button mr-2 ">
+            Go to dashboard
+          </Button>
+        </Link>
       </div>
     </div>
   );

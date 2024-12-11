@@ -15,6 +15,12 @@ interface SignUpProps {
   setChangeDialog: React.Dispatch<React.SetStateAction<string>>;
 }
  function SignIn({ setChangeDialog }: SignUpProps) {
+
+  const handelSubmit =async(e) =>{
+    e.preventDefault()
+     
+  }
+
   return (
     <Card className="w-[350px]">
       <CardHeader>

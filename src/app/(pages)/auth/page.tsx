@@ -1,7 +1,5 @@
 "use client";
-// import { SignIn } from "@/components/auth/signIn";
 import React, { useState } from "react";
-// import { SignUp } from "@/components/auth/signUp";
 import dynamic from "next/dynamic";
 const SignIn = dynamic(() => import("@/components/auth/signIn"));
 const SignUp = dynamic(() => import("@/components/auth/signUp"));

@@ -5,6 +5,9 @@
 .bg-home-gradient {
   background: radial-gradient(circle, #000000, #252144 95%);
 }
+.bg-header-gradient {
+  background: linear-gradient(to right, #252144, #000000 100%);
+}
 
 @layer base {
   :root {
