@@ -19,7 +19,7 @@ interface SignUpProps {
   setChangeDialog: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function SignUp({ setChangeDialog }:SignUpProps) {
+function SignUp({ setChangeDialog }: SignUpProps) {
   return (
     <Card className="w-[350px]">
       <CardHeader>
@@ -67,3 +67,5 @@ export function SignUp({ setChangeDialog }:SignUpProps) {
     </Card>
   );
 }
+
+export default SignUp;

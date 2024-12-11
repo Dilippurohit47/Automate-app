@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -11,9 +12,11 @@ const Header = () => {
         </h1>
       </div>
       <div>
-        <Button className="text-white bg-purple-600 px-12 hover:bg-purple-700">
-          Login
-        </Button>
+        <Link href={"/auth"}>
+          <Button className="text-white bg-purple-600 px-12 hover:bg-purple-700">
+            Login
+          </Button>
+        </Link>
       </div>
     </nav>
   );

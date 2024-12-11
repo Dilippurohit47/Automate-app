@@ -14,7 +14,7 @@ import { FcGoogle } from "react-icons/fc";
 interface SignUpProps {
   setChangeDialog: React.Dispatch<React.SetStateAction<string>>;
 }
-export function SignIn({ setChangeDialog }: SignUpProps) {
+ function SignIn({ setChangeDialog }: SignUpProps) {
   return (
     <Card className="w-[350px]">
       <CardHeader>
@@ -44,7 +44,7 @@ export function SignIn({ setChangeDialog }: SignUpProps) {
           Don't have an account ?{" "}
           <span
             className="text-blue-400 cursor-pointer hover:underline"
-            onClick={() => setChangeDialog("")}
+            onClick={() => setChangeDialog("signup")}
           >
             SignUp
           </span>
@@ -58,3 +58,5 @@ export function SignIn({ setChangeDialog }: SignUpProps) {
     </Card>
   );
 }
+
+export default SignIn
