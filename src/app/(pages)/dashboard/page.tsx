@@ -1,10 +1,17 @@
 import React from "react";
-import Header from "@/components/header/header";
-
+import ServiceBox from "@/components/dashboard/ServiceBox";
+import Link from "next/link";
 const Dashboard = () => {
   return (
-    <div>
-      Dashboard
+    <div className="h-screen  bg-[#1a1818] w-full px-12 py-20">
+      <h1 className="text-4xl font-bold text-gray-500 mb-6">Tools</h1>
+      <div className="flex flex-row gap-10">
+        <Link href={"/form-fill"}>
+          <ServiceBox />
+        </Link>
+        <ServiceBox />
+        <ServiceBox />
+      </div>
     </div>
   );
 };

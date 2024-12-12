@@ -1,3 +1,4 @@
+import { Login } from "@/app/actions/authActions/authActions";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,16 +11,26 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { Separator } from "@/components/ui/separator";
+import { redirect } from "next/navigation";
+import { FormEvent } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { toast } from "sonner";
 interface SignUpProps {
   setChangeDialog: React.Dispatch<React.SetStateAction<string>>;
 }
- function SignIn({ setChangeDialog }: SignUpProps) {
-
-  const handelSubmit =async(e) =>{
-    e.preventDefault()
-     
-  }
+function SignIn({ setChangeDialog }: SignUpProps) {
+  const handelSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const result = await Login(formData);
+    console.log(result);
+    if (result.status == "200") {
+      toast.success(result.message);
+      redirect("/")
+    } else {
+      toast.error(result?.message);
+    }
+  };
 
   return (
     <Card className="w-[350px]">
@@ -33,19 +44,19 @@ interface SignUpProps {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form>
+        <form onSubmit={(e)=>handelSubmit(e)}>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Email</Label>
-              <Input id="name" placeholder="email address " type="email" />
+              <Label htmlFor="email">Email</Label>
+              <Input name="email" placeholder="email address " type="email" />
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Password</Label>
-              <Input id="name" placeholder="password " />
+              <Label htmlFor="password">Password</Label>
+              <Input name="password" placeholder="password " type="password" />
             </div>
           </div>
+          <Button className="w-full purple-button mt-3 ">Login</Button>
         </form>
-        <Button className="w-full purple-button mt-3 ">Login</Button>
         <div className="text-[0.9rem] my-2  font-normal">
           Don't have an account ?{" "}
           <span
@@ -65,4 +76,4 @@ interface SignUpProps {
   );
 }
 
-export default SignIn
+export default SignIn;
