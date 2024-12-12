@@ -2,8 +2,13 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { toast } from "sonner";
-
-const UrlSection = ({ setValidUrl }) => {
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+const UrlSection = ({ setValidUrl, changeTab }) => {
   const [url, setUrl] = useState("");
 
   const handleSubmit = () => {
@@ -21,16 +26,40 @@ const UrlSection = ({ setValidUrl }) => {
     setValidUrl(validUrl);
   };
 
+  const [check, setCheck] = useState(false);
+
   return (
-    <div className="w-2/4 h-full px-6 py-12 flex flex-col gap-12">
-      <div className=" max-w-[20rem]">
-        <p className="  text-gray-400  text-[1.2rem]">
+    <div className="w-full h-full px-6 py-6 flex flex-col gap-12   ">
+      <div className=" max-w-[20rem] flex flex-col gap-4">
+        <p className="  text-gray-400  text-[1rem]">
           If your form had multiple input which are not saved inputs/values in
           your sidebar (saved inputs ) then click on{" "}
-          <span className="text-white"> change inputs </span>button and add all
+          <span className="text-white underline"> change inputs </span>tab and add all
           the inputs which your form have
         </p>
-        <Button className="purple-button mt-4 ">Change Inputs</Button>
+
+        <TooltipProvider delayDuration={200}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div
+                className="  h-6 w-14 py-1 px-1 bg-white rounded-full cursor-pointer flex items-center "
+                onClick={() => setCheck(!check)}
+              >
+                <div
+                  className={`bg-gray-400 transition ease-in-out duration-300 h-4 w-4 rounded-full ${
+                    check ? "bg-green-500 translate-x-[200%]" : ""
+                  }`}
+                ></div>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent className="bg-[#1a1818] translate-x-[20%] w-2/4 border-[1px]">
+              <p className="text-white text-[0.9rem] ">
+                Submit the form automatically if you dont want to check after
+                submitting the url
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       <div className="flex flex-col gap-4">
