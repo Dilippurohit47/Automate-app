@@ -8,16 +8,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-const UrlSection = ({ setValidUrl, changeTab }) => {
+const UrlSection = ({ setValidUrl, submitUrlToBackend }) => {
   const [url, setUrl] = useState("");
 
   const handleSubmit = () => {
-    // const urlPattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})([\/\w.-]*)*\/?$/;
-
-    // if (!urlPattern.test(url)) {
-    //   return toast.error("Please enter a valid URL");
-    // }
-
     const validUrl =
       url.startsWith("http://") || url.startsWith("https://")
         ? url
@@ -34,8 +28,8 @@ const UrlSection = ({ setValidUrl, changeTab }) => {
         <p className="  text-gray-400  text-[1rem]">
           If your form had multiple input which are not saved inputs/values in
           your sidebar (saved inputs ) then click on{" "}
-          <span className="text-white underline"> change inputs </span>tab and add all
-          the inputs which your form have
+          <span className="text-white underline"> change inputs </span>tab and
+          add all the inputs which your form have
         </p>
 
         <TooltipProvider delayDuration={200}>
@@ -67,11 +61,11 @@ const UrlSection = ({ setValidUrl, changeTab }) => {
           placeholder="Form url"
           type="url "
           className="text-black"
-          onChange={(e) => setUrl(e.target.value)}
+          onChange={(e) => setValidUrl(e.target.value)}
         />
         <Button
           className="bg-blue-600 hover:bg-blue-700"
-          onClick={handleSubmit}
+          onClick={submitUrlToBackend}
         >
           Submit
         </Button>

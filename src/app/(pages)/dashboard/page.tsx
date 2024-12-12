@@ -9,8 +9,6 @@ const Dashboard = () => {
         <Link href={"/form-fill"}>
           <ServiceBox />
         </Link>
-        <ServiceBox />
-        <ServiceBox />
       </div>
     </div>
   );

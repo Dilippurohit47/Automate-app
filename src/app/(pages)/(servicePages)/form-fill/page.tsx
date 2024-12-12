@@ -3,15 +3,32 @@ import InputBars from "@/components/form-fill/InputBars";
 import URLPreviewApp from "@/components/form-fill/PreviewBox";
 import UrlSection from "@/components/form-fill/UrlSection";
 import { Separator } from "@radix-ui/react-separator";
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ChangeInputs from "@/components/form-fill/ChangeInputs";
+import { fetchPost } from "@/lib/utils";
+import { BACKEND_URL } from "@/lib/url";
 
 const FormFill = () => {
   const [validUrl, setValidUrl] = useState("");
-  const [switchTabs, setSwitchTabs] = useState("urlSectionTab");
+  const [switchTabs, setSwitchTabs] = useState("changeInputsTab");
+  const [htmlContent, setHtmlContent] = useState(""); 
+  console.log(validUrl)
+  const submitUrlToBackend = async () => {
+    const res = await fetchPost(
+      `${BACKEND_URL}/api/v1/form/fill-form/cm4ljhj7c0000upu81mnoyti6`,
+      {
+        url: validUrl,
+      }
+    );
+    const data = await res.json();
+    if (res.ok) {
+      setHtmlContent(data.content);
+    }
+  };
+
   return (
-    <div className="h-screen flex  bg-[#1a1818] w-full px-12 py-20">
+    <div className="h-screen flex  bg-[#191919] w-full px-12 py-20">
       <InputBars />
       <div className="text-white flex   flex-row  w-full border-t-[1px]">
         <Tabs defaultValue={switchTabs} className="w-2/4 relative ">
@@ -48,7 +65,11 @@ const FormFill = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="urlSectionTab">
-            <UrlSection setValidUrl={setValidUrl} changeTab={setSwitchTabs} />
+            <UrlSection
+              setValidUrl={setValidUrl}
+              changeTab={setSwitchTabs}
+              submitUrlToBackend={submitUrlToBackend}
+            />
           </TabsContent>
           <TabsContent value="changeInputsTab">
             <ChangeInputs />
@@ -59,7 +80,7 @@ const FormFill = () => {
           orientation="horizontal"
           className="border-gray-400 border-[1px]"
         />
-        <URLPreviewApp previewUrl={validUrl} />
+        <URLPreviewApp previewUrl={validUrl} htmlContent={htmlContent} />
       </div>
     </div>
   );
