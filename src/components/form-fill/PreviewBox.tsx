@@ -1,30 +1,29 @@
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
+import { RxCross1 } from "react-icons/rx";
 
 const URLPreviewApp = ({ previewUrl, htmlContent }) => {
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    if (previewUrl) {
-      const timer = setTimeout(() => {
-        setLoading(false);
-      }, 500);
-
-      return () => clearTimeout(timer);
+    if (htmlContent) {
+      setLoading(false);
     }
-  }, [previewUrl]);
-
+  }, [htmlContent]);
   return (
-    <div className="w-2/4 h-full ">
-      <h2 className="px-2 bg-purple-600 max-w-[10rem] rounded-md m-1">
+    <div className="w-2/4 h-full  ">
+      <div className="px-2 bg-purple-600 max-w-[10rem] rounded-md m-1 flex  items-center justify-between">
         Preview
-      </h2>
+        <div   className="flex  rounded-full h-4 w-4 cursor-pointer justify-center items-center p-[3px] bg-white text-black">
+          <RxCross1  size={22}/>
+        </div>
+      </div>
+
       {previewUrl && loading ? (
-        <div className="w-full h-full  flex justify-center items-center">
+        <div className="w-full h-full   flex justify-center items-center">
           <Loader />
         </div>
       ) : (
-        <div className="h-full">
+        <div className="h-full   ">
           <iframe
             id="url-preview-iframe"
             srcDoc={`<!DOCTYPE html>
@@ -40,14 +39,14 @@ const URLPreviewApp = ({ previewUrl, htmlContent }) => {
 <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css">
 
               </head>
-              <body>
+          <body style="background-color: transparent;">
                 ${htmlContent}
               </body>
               </html>`}
             title="URL Preview"
             width="100%"
             height="500px"
-            className="border-t-2 h-full"
+            className="border-t-2 h-full "
           />
         </div>
       )}
@@ -58,3 +57,4 @@ const URLPreviewApp = ({ previewUrl, htmlContent }) => {
 export default URLPreviewApp;
 
 // https://forms.fillout.com/t/9umvKHN9QFus
+// https://form.jotform.com/243469288393472

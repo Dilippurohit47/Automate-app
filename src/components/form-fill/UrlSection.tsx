@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { toast } from "sonner";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-const UrlSection = ({ setValidUrl, submitUrlToBackend }) => {
+const UrlSection = ({ setValidUrl }) => {
   const [url, setUrl] = useState("");
 
-  const handleSubmit = () => {
-    const validUrl =
-      url.startsWith("http://") || url.startsWith("https://")
-        ? url
-        : `https://${url}`;
+  // const handleSubmit = () => {
+  //   const validUrl =
+  //     url.startsWith("http://") || url.startsWith("https://")
+  //       ? url
+  //       : `https://${url}`;
 
-    setValidUrl(validUrl);
-  };
+  //   setValidUrl(validUrl);
+  // };
 
   const [check, setCheck] = useState(false);
 
@@ -61,11 +61,13 @@ const UrlSection = ({ setValidUrl, submitUrlToBackend }) => {
           placeholder="Form url"
           type="url "
           className="text-black"
-          onChange={(e) => setValidUrl(e.target.value)}
+          onChange={(e) => setUrl(e.target.value)}
         />
         <Button
           className="bg-blue-600 hover:bg-blue-700"
-          onClick={submitUrlToBackend}
+          onClick={() => {
+            setValidUrl(url);
+          }}
         >
           Submit
         </Button>
