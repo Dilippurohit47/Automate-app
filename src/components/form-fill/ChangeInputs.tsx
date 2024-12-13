@@ -7,19 +7,36 @@ import { Button } from "../ui/button";
 import { fetchPost } from "@/lib/utils";
 import { BACKEND_URL } from "@/lib/url";
 import { toast } from "sonner";
-const ChangeInputs = ({ setRunRefetch }) => {
-  const [inputs, setInputs] = useState([1]);
+import { FiMinus } from "react-icons/fi";
+
+import { v4 as uuidV4 } from "uuid";
+
+const ChangeInputs = ({
+  setRunRefetch,
+}: {
+  setRunRefetch: (state: boolean) => void;
+}) => {
+  const [inputs, setInputs] = useState([
+    {
+      id: uuidV4(),
+      key: "",
+      value: "",
+    },
+  ]);
 
   const addNewInput = () => {
+    if (inputs.length > 5) {
+      return toast.error("Save this inputs to add more");
+    }
     const newInput = {
-      id: inputs.length + 1,
+      id: uuidV4(),
       key: "",
       value: "",
     };
     setInputs((prev) => [...prev, newInput]);
   };
 
-  const saveInputValues = (id) => {
+  const saveInputValues = (id: string) => {
     const updateInputs = inputs.map((i) => {
       if (i.id === id) {
         i.value = document.getElementById(`value-${id}`)?.value;
@@ -29,7 +46,7 @@ const ChangeInputs = ({ setRunRefetch }) => {
     });
     setInputs(updateInputs);
   };
-  const saveInputKeys = (id) => {
+  const saveInputKeys = (id: string) => {
     const updatedInputs = inputs.map((input) => {
       if (input.id === id) {
         input.key = document.getElementById(`key-${id}`)?.value;
@@ -41,23 +58,38 @@ const ChangeInputs = ({ setRunRefetch }) => {
   };
 
   const saveInputs = async () => {
-    const res = await fetchPost(
-      `${BACKEND_URL}/api/v1/profile/save-information/cm4mjllj10000up6gczi623ff`,
-      {
-        inputs,
-      }
+    const hasEmptyInputs = inputs.some(
+      (input) => input.key === "" || input.value === ""
     );
-    console.log(await res.json())
-    if (res.ok) {
-      toast.success("Input added successfully");
-      setInputs([]);
-      setRunRefetch(true);
+
+    if (hasEmptyInputs) {
+      return toast.error("Fill all the inputs or delete empty one's");
     } else {
-      toast.error("Internal server error");
+      const res = await fetchPost(
+        `${BACKEND_URL}/api/v1/profile/save-information/cm4mjllj10000up6gczi623ff`,
+        {
+          inputs,
+        }
+      );
+
+      if (res.ok) {
+        toast.success("Input added successfully");
+        setInputs([]);
+        setRunRefetch(true);
+      } else {
+        toast.error("Internal server error");
+      }
     }
   };
 
-  console.log(inputs);
+  const deleteInput = (idToDelete: string) => {
+    console.log(idToDelete);
+    const updatedInputs = inputs.filter((input) => {
+      return input.id !== idToDelete;
+    });
+
+    setInputs(updatedInputs);
+  };
 
   return (
     <div className="text-white w-full px-6 py-6 flex   ">
@@ -81,27 +113,34 @@ const ChangeInputs = ({ setRunRefetch }) => {
               </div>
             </div>
             <div
-              className="flex  rounded-full cursor-pointer justify-center items-center bg-purple-500"
+              className="flex  rounded-full  cursor-pointer justify-center items-center bg-purple-500"
               onClick={addNewInput}
             >
               <IoIosAdd size={21} />
             </div>
           </div>
-          <div className="flex flex-col gap-5  max-h-[25rem] overflow-y-auto ">
-            {inputs.map((input, index) => (
-              <div key={index} className="flex  gap-5">
+          <div className="flex flex-col gap-5 mt-4  max-h-[25rem] overflow-y-auto ">
+            {inputs.map((input) => (
+              <div key={input.id} className="flex  items-center gap-5">
                 <Input
                   placeholder="Input name"
-                  className="w-2/4 text-black capitalize"
+                  className=" w-[45%] text-black capitalize"
                   id={`key-${input.id}`}
                   onChange={() => saveInputKeys(input.id)}
                 />
+
                 <Input
                   id={`value-${input.id}`}
                   placeholder="Input values"
-                  className=" text-black w-2/4 "
+                  className=" text-black w-[45%] "
                   onChange={() => saveInputValues(input.id)}
                 />
+                <div
+                  className="flex  rounded-full h-[1.35rem] w-[1.35rem] p-1 cursor-pointer justify-center items-center bg-red-400 hover:bg-red-500"
+                  onClick={() => deleteInput(input.id)}
+                >
+                  <FiMinus size={21} />
+                </div>
               </div>
             ))}
           </div>

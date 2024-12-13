@@ -114,3 +114,14 @@
     transform: translate(-59%, -50%) rotate(225deg);
   }
 }
+
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+
+.hide-scrollbar::-webkit-scrollbar{
+  display: none;
+}

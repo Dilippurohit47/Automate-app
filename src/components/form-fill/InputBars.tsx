@@ -45,38 +45,40 @@ const InputBars = ({ runRefecth, setRunRefetch }) => {
       <div className="text-gray-500 text-1xl my-2 font-semibold">
         Saved Inputs
       </div>
-      {saveInputs.length > 0 && (
-        <>
-          {Object.keys(saveInputs[0]).map((key, index) => (
-            <div
-              key={index}
-              className="px-2 py-1 mt-3 bg-white rounded-md capitalize transition  cursor-pointer ease-in-out duration-200"
-              onClick={() => openAccordion(index)}
-            >
-              <div className="flex justify-between items-center">
-                <p className="text-[0.9rem] whitespace-nowrap truncate ">
-                  {key}
-                </p>
-
-                <div className="text-slate-500">
-                  <IoMdArrowDropdown size={22} />
-                </div>
-              </div>
+      <div className="overflow-y-auto  hide-scrollbar">
+        {saveInputs.length > 0 && (
+          <>
+            {Object.keys(saveInputs[0]).map((key, index) => (
               <div
-                className={`grid overflow-hidden transition-all ease-in-out duration-300 text-slate-600 ${
-                  showInputValue === index
-                    ? "grid-rows-[1fr] opacity-100 "
-                    : "grid-rows-[0fr] opacity-0"
-                }`}
+                key={index}
+                className="px-2 py-1 mt-3  bg-white rounded-md   capitalize transition  cursor-pointer ease-in-out duration-200"
+                onClick={() => openAccordion(index)}
               >
-                <div className=" text-[0.9rem] overflow-hidden">
-                  {saveInputs[0][key]}
+                <div className="flex justify-between items-center">
+                  <p className="text-[0.9rem] whitespace-nowrap truncate ">
+                    {key}
+                  </p>
+
+                  <div className="text-slate-500">
+                    <IoMdArrowDropdown size={22} />
+                  </div>
+                </div>
+                <div
+                  className={`grid overflow-hidden transition-all ease-in-out duration-300 text-slate-600 ${
+                    showInputValue === index
+                      ? "grid-rows-[1fr] opacity-100 "
+                      : "grid-rows-[0fr] opacity-0"
+                  }`}
+                >
+                  <div className=" text-[0.9rem] overflow-hidden">
+                    {saveInputs[0][key]}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </>
-      )}
+            ))}
+          </>
+        )}
+      </div>
     </div>
   );
 };
