@@ -1,7 +1,9 @@
 "use client";
+import { useSpring, animated } from "@react-spring/web";
 import { BACKEND_URL } from "@/lib/url";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { IoMdArrowDropdown } from "react-icons/io";
 const fetchUserInfo = async () => {
   const response = await fetch(
     `${BACKEND_URL}/api/v1/profile/get-information/cm4mjllj10000up6gczi623ff`
@@ -28,19 +30,49 @@ const InputBars = ({ runRefecth, setRunRefetch }) => {
     }
   }, [runRefecth]);
 
+  const [showInputValue, setShowInputValue] = useState();
+
+  const openAccordion = (id) => {
+    if (showInputValue == id) {
+      setShowInputValue(null);
+    } else {
+      setShowInputValue(id);
+    }
+  };
+
   return (
-    <div className="w-[8rem] overflow-hidden px-2  flex flex-col  bg-[#1a1818]  h-full border-r-2 border-t-2 border-gray-500">
+    <div className="w-[10rem] overflow-hidden px-2  flex flex-col  bg-[#1a1818]  h-full border-r-2 border-t-2 border-gray-500">
       <div className="text-gray-500 text-1xl my-2 font-semibold">
         Saved Inputs
       </div>
       {saveInputs.length > 0 && (
         <>
-          {Object.keys(saveInputs[0]).map((key) => (
+          {Object.keys(saveInputs[0]).map((key, index) => (
             <div
-              key={key}
-              className="px-2 py-1 mt-3 bg-white rounded-md capitalize"
+              key={index}
+              className="px-2 py-1 mt-3 bg-white rounded-md capitalize transition  cursor-pointer ease-in-out duration-200"
+              onClick={() => openAccordion(index)}
             >
-              {key}
+              <div className="flex justify-between items-center">
+                <p className="text-[0.9rem] whitespace-nowrap truncate ">
+                  {key}
+                </p>
+
+                <div className="text-slate-500">
+                  <IoMdArrowDropdown size={22} />
+                </div>
+              </div>
+              <div
+                className={`grid overflow-hidden transition-all ease-in-out duration-300 text-slate-600 ${
+                  showInputValue === index
+                    ? "grid-rows-[1fr] opacity-100 "
+                    : "grid-rows-[0fr] opacity-0"
+                }`}
+              >
+                <div className=" text-[0.9rem] overflow-hidden">
+                  {saveInputs[0][key]}
+                </div>
+              </div>
             </div>
           ))}
         </>

@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 import { fetchPost } from "@/lib/utils";
 import { BACKEND_URL } from "@/lib/url";
 import { toast } from "sonner";
-const ChangeInputs = ({setRunRefetch}) => {
+const ChangeInputs = ({ setRunRefetch }) => {
   const [inputs, setInputs] = useState([1]);
 
   const addNewInput = () => {
@@ -47,12 +47,13 @@ const ChangeInputs = ({setRunRefetch}) => {
         inputs,
       }
     );
+    console.log(await res.json())
     if (res.ok) {
       toast.success("Input added successfully");
       setInputs([]);
-      setRunRefetch(true)
-    }else{
-      toast.error("Internal server error")
+      setRunRefetch(true);
+    } else {
+      toast.error("Internal server error");
     }
   };
 
