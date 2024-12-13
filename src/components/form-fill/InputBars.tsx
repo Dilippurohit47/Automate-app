@@ -1,5 +1,5 @@
 "use client";
-import { useSpring, animated } from "@react-spring/web";
+
 import { BACKEND_URL } from "@/lib/url";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -41,17 +41,15 @@ const InputBars = ({ runRefecth, setRunRefetch }) => {
   };
 
   return (
-    <div className="w-[10rem] overflow-hidden px-2  flex flex-col  bg-[#1a1818]  h-full border-r-2 border-t-2 border-gray-500">
-      <div className="text-gray-500 text-1xl my-2 font-semibold">
-        Saved Inputs
-      </div>
+    <div className="w-[10rem] overflow-hidden px-2   rounded-md flex flex-col max-h-[37rem]  bg-[#1a1818]  h-full  border-2 rounded-tr-none border-gray-500 py-2">
+      <div className="text-slate-500 text-1xl font-semibold ">Saved Data</div>
       <div className="overflow-y-auto  hide-scrollbar">
         {saveInputs.length > 0 && (
           <>
             {Object.keys(saveInputs[0]).map((key, index) => (
               <div
                 key={index}
-                className="px-2 py-1 mt-3  bg-white rounded-md   capitalize transition  cursor-pointer ease-in-out duration-200"
+                className="px-2 py-1 mt-3  bg-white rounded-md  shadow-2xl  capitalize transition  cursor-pointer ease-in-out duration-200"
                 onClick={() => openAccordion(index)}
               >
                 <div className="flex justify-between items-center">

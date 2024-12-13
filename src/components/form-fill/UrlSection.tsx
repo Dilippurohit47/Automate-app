@@ -31,7 +31,7 @@ const UrlSection = ({ setValidUrl }) => {
   };
 
   return (
-    <div className="w-full h-full px-6 py-6 flex flex-col gap-12   ">
+    <div className="w-full h-full px-6 py-6 flex flex-col gap-12  ">
       <div className=" flex flex-col gap-4 max-w-[20rem]">
         <p className="  text-gray-400  text-[1rem]">
           If your form had multiple input which are not saved inputs/values in

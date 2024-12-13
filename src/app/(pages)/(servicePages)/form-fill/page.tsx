@@ -11,7 +11,7 @@ import { BACKEND_URL } from "@/lib/url";
 
 const FormFill = () => {
   const [validUrl, setValidUrl] = useState("");
-  const [switchTabs, setSwitchTabs] = useState("urlSectionTab");
+  const [switchTabs, setSwitchTabs] = useState("changeInputsTab");
   const [htmlContent, setHtmlContent] = useState("");
 
   useEffect(() => {
@@ -34,8 +34,9 @@ const FormFill = () => {
   const [runRefecth, setRunRefetch] = useState(false);
 
   return (
-    <div className="h-screen flex  bg-[#191919] w-full px-12 py-20">
-      <InputBars runRefecth={runRefecth} setRunRefetch={setRunRefetch}/>
+    <div className=" flex  bg-[#191919] w-full px-12 pt-20 overflow-hidden min-h-screen ">
+      <InputBars runRefecth={runRefecth} setRunRefetch={setRunRefetch} />
+      {/* <Separator orientation="horizontal" className=" bg-gray-400 w-[2px] h-screen" /> */}
       <div className="text-white flex   flex-row  w-full border-t-[1px]">
         <Tabs defaultValue={switchTabs} className="w-2/4 relative ">
           <TabsList className="px-0 py-0 mt-4 ml-4 ">
@@ -74,7 +75,7 @@ const FormFill = () => {
             <UrlSection setValidUrl={setValidUrl} />
           </TabsContent>
           <TabsContent value="changeInputsTab">
-            <ChangeInputs  setRunRefetch={setRunRefetch}/>
+            <ChangeInputs setRunRefetch={setRunRefetch} />
           </TabsContent>
         </Tabs>
 

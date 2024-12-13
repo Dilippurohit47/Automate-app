@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { FiMinus } from "react-icons/fi";
 
 import { v4 as uuidV4 } from "uuid";
+import UpdateInputs from "./UpdateInputs";
 
 const ChangeInputs = ({
   setRunRefetch,
@@ -83,7 +84,6 @@ const ChangeInputs = ({
   };
 
   const deleteInput = (idToDelete: string) => {
-    console.log(idToDelete);
     const updatedInputs = inputs.filter((input) => {
       return input.id !== idToDelete;
     });
@@ -92,14 +92,14 @@ const ChangeInputs = ({
   };
 
   return (
-    <div className="text-white w-full px-6 py-6 flex   ">
+    <div className="text-white w-full px-6 py-6 flex gap-10   flex-col   ">
       <div className="w-full  ">
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
             {" "}
             <div className="flex    group w-full gap-2 justify-start items-center">
-              <div className="flex   items-center gap-2 w-[39%]">
-                <BiSolidGrid size={21} className="text-gray-400" />
+              <div className="flex   items-center gap-2 text-slate-200  font-semibold w-[39%]">
+                <BiSolidGrid size={21} className="text-slate-400" />
                 Add new input
               </div>
               <div
@@ -146,12 +146,17 @@ const ChangeInputs = ({
           </div>
 
           {inputs.length > 0 && (
-            <Button className="purple-button mt-3" onClick={saveInputs}>
+            <Button
+              className="purple-button mt-3 text-[1.1rem]"
+              onClick={saveInputs}
+            >
               save
             </Button>
           )}
         </div>
       </div>
+
+      <UpdateInputs />
     </div>
   );
 };

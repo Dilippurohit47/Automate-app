@@ -13,7 +13,6 @@ const URLPreviewApp = ({ previewUrl, htmlContent, setValidUrl }) => {
   const removePreview = () => {
     setValidUrl("");
   };
-  console.log(previewUrl);
   return (
     <div className="w-2/4 h-full  ">
       <div className="px-2 bg-purple-600 max-w-[10rem] rounded-md m-1 flex  items-center justify-between">
