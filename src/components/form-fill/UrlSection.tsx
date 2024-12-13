@@ -22,9 +22,17 @@ const UrlSection = ({ setValidUrl }) => {
 
   const [check, setCheck] = useState(false);
 
+  const submitUrl = () => {
+    if (url) {
+      setValidUrl(url);
+    }
+
+    setUrl("");
+  };
+
   return (
     <div className="w-full h-full px-6 py-6 flex flex-col gap-12   ">
-      <div className=" max-w-[20rem] flex flex-col gap-4">
+      <div className=" flex flex-col gap-4 max-w-[20rem]">
         <p className="  text-gray-400  text-[1rem]">
           If your form had multiple input which are not saved inputs/values in
           your sidebar (saved inputs ) then click on{" "}
@@ -60,15 +68,11 @@ const UrlSection = ({ setValidUrl }) => {
         <Input
           placeholder="Form url"
           type="url "
+          value={url}
           className="text-black"
           onChange={(e) => setUrl(e.target.value)}
         />
-        <Button
-          className="bg-blue-600 hover:bg-blue-700"
-          onClick={() => {
-            setValidUrl(url);
-          }}
-        >
+        <Button className="bg-blue-600 hover:bg-blue-700" onClick={submitUrl}>
           Submit
         </Button>
       </div>

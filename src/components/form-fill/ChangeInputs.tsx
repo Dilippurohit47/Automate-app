@@ -4,12 +4,62 @@ import { BiSolidGrid } from "react-icons/bi";
 import { IoIosAdd } from "react-icons/io";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Button } from "../ui/button";
+import { fetchPost } from "@/lib/utils";
+import { BACKEND_URL } from "@/lib/url";
+import { toast } from "sonner";
 const ChangeInputs = () => {
-  const [inputs, setInputs] = useState(0);
+  const [inputs, setInputs] = useState([]);
+
+  const addNewInput = () => {
+    const newInput = {
+      id: inputs.length + 1,
+      key: "",
+      value: "",
+    };
+    setInputs((prev) => [...prev, newInput]);
+  };
+
+  const saveInputValues = (id) => {
+    const updateInputs = inputs.map((i) => {
+      if (i.id === id) {
+        i.value = document.getElementById(`value-${id}`)?.value;
+        return i; // Spread to ensure a new object is returned
+      }
+      return i;
+    });
+    setInputs(updateInputs);
+  };
+  const saveInputKeys = (id) => {
+    const updatedInputs = inputs.map((input) => {
+      if (input.id === id) {
+        input.key = document.getElementById(`key-${id}`)?.value;
+        return input;
+      }
+      return input;
+    });
+    setInputs(updatedInputs);
+  };
+
+  const saveInputs = async () => {
+    const res = await fetchPost(
+      `${BACKEND_URL}/api/v1/profile/save-information/cm4mjllj10000up6gczi623ff`,
+      {
+        inputs,
+      }
+    );
+    if (res.ok) {
+      toast.success("Input added successfully");
+      setInputs([]);
+    }else{
+      toast.error("Internal server error")
+    }
+  };
+
+  console.log(inputs);
 
   return (
-    <div className="text-white w-full px-6 py-4">
-      <div className="w-full h-screen py-">
+    <div className="text-white w-full px-6 py-6 flex   ">
+      <div className="w-full  ">
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
             {" "}
@@ -30,23 +80,35 @@ const ChangeInputs = () => {
             </div>
             <div
               className="flex  rounded-full cursor-pointer justify-center items-center bg-purple-500"
-              onClick={() => setInputs((prev) => prev + 1)}
+              onClick={addNewInput}
             >
               <IoIosAdd size={21} />
             </div>
           </div>
           <div className="flex flex-col gap-5  max-h-[25rem] overflow-y-auto ">
-            {Array.from({ length: inputs }, (_, index) => (
-              <div className="flex  gap-5">
-                <Input placeholder="Input name" className="w-2/4 text-black" />
+            {inputs.map((input, index) => (
+              <div key={index} className="flex  gap-5">
                 <Input
+                  placeholder="Input name"
+                  className="w-2/4 text-black capitalize"
+                  id={`key-${input.id}`}
+                  onChange={() => saveInputKeys(input.id)}
+                />
+                <Input
+                  id={`value-${input.id}`}
                   placeholder="Input values"
-                  className=" text-black w-2/4 capitalize"
+                  className=" text-black w-2/4 "
+                  onChange={() => saveInputValues(input.id)}
                 />
               </div>
             ))}
-          </div>{" "}
-          {inputs > 0 && <Button className="purple-button mt-3">save</Button>}
+          </div>
+
+          {inputs.length > 0 && (
+            <Button className="purple-button mt-3" onClick={saveInputs}>
+              save
+            </Button>
+          )}
         </div>
       </div>
     </div>

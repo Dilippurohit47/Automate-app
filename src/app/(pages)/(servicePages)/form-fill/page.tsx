@@ -80,7 +80,7 @@ const FormFill = () => {
           orientation="horizontal"
           className="border-gray-400 border-[1px]"
         />
-        <URLPreviewApp previewUrl={validUrl} htmlContent={htmlContent} />
+        <URLPreviewApp previewUrl={validUrl} setValidUrl={setValidUrl} htmlContent={htmlContent}  />
       </div>
     </div>
   );
