@@ -13,7 +13,7 @@ const fetchUserInfo = async () => {
 };
 
 const InputBars = ({ runRefecth, setRunRefetch }) => {
-  const { data, refetch } = useQuery(["userInfo"], fetchUserInfo);
+  const { data, refetch } = useQuery(["user-info"], fetchUserInfo);
 
   const [saveInputs, setSaveInputs] = useState([]);
 
@@ -41,7 +41,7 @@ const InputBars = ({ runRefecth, setRunRefetch }) => {
   };
 
   return (
-    <div className="w-[10rem] overflow-hidden px-2   rounded-md flex flex-col max-h-[37rem]  bg-[#1a1818]  h-full  border-2 rounded-tr-none border-gray-500 py-2">
+    <div className="w-[10rem] overflow-hidden px-2   rounded-md flex flex-col h-[37rem]   bg-[#1a1818]    border-2 rounded-tr-none border-gray-500 py-2">
       <div className="text-slate-500 text-1xl font-semibold ">Saved Data</div>
       <div className="overflow-y-auto  hide-scrollbar">
         {saveInputs.length > 0 && (

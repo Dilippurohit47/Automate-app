@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { BiSolidGrid } from "react-icons/bi";
 import { IoIosAdd } from "react-icons/io";
@@ -11,22 +11,28 @@ import { FiMinus } from "react-icons/fi";
 
 import { v4 as uuidV4 } from "uuid";
 import UpdateInputs from "./UpdateInputs";
+import { QueryClient, useMutation } from "@tanstack/react-query";
+import { queryClient } from "@/lib/ReactQuery";
+
+const addInput = async (inputs) => {
+  const res = await fetchPost(
+    `${BACKEND_URL}/api/v1/profile/save-information/cm4mjllj10000up6gczi623ff`,
+    {
+      inputs,
+    }
+  );
+  return res;
+};
 
 const ChangeInputs = ({
   setRunRefetch,
 }: {
   setRunRefetch: (state: boolean) => void;
 }) => {
-  const [inputs, setInputs] = useState([
-    {
-      id: uuidV4(),
-      key: "",
-      value: "",
-    },
-  ]);
-
+  const [inputs, setInputs] = useState([]);
+  // const queryClient = new QueryClient()
   const addNewInput = () => {
-    if (inputs.length > 5) {
+    if (inputs.length > 4) {
       return toast.error("Save this inputs to add more");
     }
     const newInput = {
@@ -37,52 +43,48 @@ const ChangeInputs = ({
     setInputs((prev) => [...prev, newInput]);
   };
 
-  const saveInputValues = (id: string) => {
-    const updateInputs = inputs.map((i) => {
-      if (i.id === id) {
-        i.value = document.getElementById(`value-${id}`)?.value;
-        return i; // Spread to ensure a new object is returned
-      }
-      return i;
-    });
-    setInputs(updateInputs);
-  };
-  const saveInputKeys = (id: string) => {
-    const updatedInputs = inputs.map((input) => {
-      if (input.id === id) {
-        input.key = document.getElementById(`key-${id}`)?.value;
-        return input;
-      }
-      return input;
-    });
+  useEffect(() => {
+    addNewInput();
+  }, []);
+
+  const saveInputKeys = (id: string, key: string) => {
+    const updatedInputs = inputs.map((input) =>
+      input.id === id ? { ...input, key } : input
+    );
     setInputs(updatedInputs);
   };
 
-  const saveInputs = async () => {
+  const saveInputValues = (id: string, value) => {
+    setInputs((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, value } : item))
+    );
+  };
+
+  const AddDataMutation = useMutation(addInput, {
+    onSuccess: async (res) => {
+      if (res.ok) {
+        toast.success("Data Saved!");
+        setInputs([]);
+        queryClient.invalidateQueries(["user-info-for-updates"]);
+        queryClient.invalidateQueries(["user-info"]);
+      } else {
+        toast.error("Error saving data try again later");
+      }
+    },
+    onError: (error) => {
+      toast.error("Internal server error");
+    },
+  });
+
+  const addDataToServer = () => {
     const hasEmptyInputs = inputs.some(
       (input) => input.key === "" || input.value === ""
     );
-
     if (hasEmptyInputs) {
       return toast.error("Fill all the inputs or delete empty one's");
-    } else {
-      const res = await fetchPost(
-        `${BACKEND_URL}/api/v1/profile/save-information/cm4mjllj10000up6gczi623ff`,
-        {
-          inputs,
-        }
-      );
-
-      if (res.ok) {
-        toast.success("Input added successfully");
-        setInputs([]);
-        setRunRefetch(true);
-      } else {
-        toast.error("Internal server error");
-      }
     }
+    AddDataMutation.mutate(inputs);
   };
-
   const deleteInput = (idToDelete: string) => {
     const updatedInputs = inputs.filter((input) => {
       return input.id !== idToDelete;
@@ -126,14 +128,15 @@ const ChangeInputs = ({
                   placeholder="Input name"
                   className=" w-[45%] text-black capitalize"
                   id={`key-${input.id}`}
-                  onChange={() => saveInputKeys(input.id)}
+                  onChange={(e) => saveInputKeys(input.id, e.target.value)}
+                  value={input.key}
                 />
 
                 <Input
                   id={`value-${input.id}`}
                   placeholder="Input values"
                   className=" text-black w-[45%] "
-                  onChange={() => saveInputValues(input.id)}
+                  onChange={(e) => saveInputValues(input.id, e.target.value)}
                 />
                 <div
                   className="flex  rounded-full h-[1.35rem] w-[1.35rem] p-1 cursor-pointer justify-center items-center bg-red-400 hover:bg-red-500"
@@ -148,7 +151,7 @@ const ChangeInputs = ({
           {inputs.length > 0 && (
             <Button
               className="purple-button mt-3 text-[1.1rem]"
-              onClick={saveInputs}
+              onClick={addDataToServer}
             >
               save
             </Button>
