@@ -8,26 +8,27 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-const UrlSection = ({ setValidUrl }) => {
-  const [url, setUrl] = useState("");
-
-  // const handleSubmit = () => {
-  //   const validUrl =
-  //     url.startsWith("http://") || url.startsWith("https://")
-  //       ? url
-  //       : `https://${url}`;
-
-  //   setValidUrl(validUrl);
-  // };
-
+import { BACKEND_URL } from "@/lib/url";
+import { fetchPost } from "@/lib/utils";
+const UrlSection = ({ setValidUrl, validUrl, setHtmlContent }) => {
   const [check, setCheck] = useState(false);
 
-  const submitUrl = () => {
-    if (url) {
-      setValidUrl(url);
-    }
+  const [url, setUrl] = useState("");
 
-    setUrl("");
+  const submitUrlToBackend = async () => {
+    setValidUrl(url);
+    setHtmlContent("")
+    const res = await fetchPost(
+      `${BACKEND_URL}/api/v1/form/fill-form/cm4ljhj7c0000upu81mnoyti6`,
+      {
+        url: url,
+      }
+    );
+    const data = await res.json();
+    if (res.ok) {
+      setHtmlContent(data.content);
+      setUrl("")
+    }
   };
 
   return (
@@ -72,7 +73,10 @@ const UrlSection = ({ setValidUrl }) => {
           className="text-black"
           onChange={(e) => setUrl(e.target.value)}
         />
-        <Button className="bg-blue-600 hover:bg-blue-700" onClick={submitUrl}>
+        <Button
+          className="bg-blue-600 hover:bg-blue-700"
+          onClick={submitUrlToBackend}
+        >
           Submit
         </Button>
       </div>

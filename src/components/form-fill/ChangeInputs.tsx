@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Input } from "../ui/input";
-import { BiSolidGrid } from "react-icons/bi";
-import { IoIosAdd } from "react-icons/io";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { Button } from "../ui/button";
-import { fetchPost } from "@/lib/utils";
 import { BACKEND_URL } from "@/lib/url";
-import { toast } from "sonner";
+import { fetchPost } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { BiSolidGrid } from "react-icons/bi";
+import { FaArrowRightLong } from "react-icons/fa6";
 import { FiMinus } from "react-icons/fi";
+import { IoIosAdd } from "react-icons/io";
+import { toast } from "sonner";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
+import { queryClient } from "@/lib/ReactQuery";
+import { useMutation } from "@tanstack/react-query";
 import { v4 as uuidV4 } from "uuid";
 import UpdateInputs from "./UpdateInputs";
-import { QueryClient, useMutation } from "@tanstack/react-query";
-import { queryClient } from "@/lib/ReactQuery";
 
 const addInput = async (inputs) => {
   const res = await fetchPost(
@@ -24,13 +24,8 @@ const addInput = async (inputs) => {
   return res;
 };
 
-const ChangeInputs = ({
-  setRunRefetch,
-}: {
-  setRunRefetch: (state: boolean) => void;
-}) => {
+const ChangeInputs = ({}: {}) => {
   const [inputs, setInputs] = useState([]);
-  // const queryClient = new QueryClient()
   const addNewInput = () => {
     if (inputs.length > 4) {
       return toast.error("Save this inputs to add more");
@@ -44,9 +39,12 @@ const ChangeInputs = ({
   };
 
   useEffect(() => {
-    addNewInput();
+    if (inputs.length <= 0) {
+      console.log("creting inputs", inputs.length);
+      addNewInput();
+    }
   }, []);
-
+console.log(inputs)
   const saveInputKeys = (id: string, key: string) => {
     const updatedInputs = inputs.map((input) =>
       input.id === id ? { ...input, key } : input
@@ -116,7 +114,7 @@ const ChangeInputs = ({
             </div>
             <div
               className="flex  rounded-full  cursor-pointer justify-center items-center bg-purple-500"
-              onClick={addNewInput}
+              onClick={() => addNewInput()}
             >
               <IoIosAdd size={21} />
             </div>

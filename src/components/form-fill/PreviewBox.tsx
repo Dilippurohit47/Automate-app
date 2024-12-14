@@ -7,9 +7,12 @@ const URLPreviewApp = ({ previewUrl, htmlContent, setValidUrl }) => {
   useEffect(() => {
     if (htmlContent) {
       setLoading(false);
+    } else {
+      setLoading(true);
     }
   }, [htmlContent]);
-
+  console.log(htmlContent);
+  console.log(loading);
   const removePreview = () => {
     setValidUrl("");
   };

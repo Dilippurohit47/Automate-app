@@ -11,32 +11,14 @@ import { BACKEND_URL } from "@/lib/url";
 
 const FormFill = () => {
   const [validUrl, setValidUrl] = useState("");
-  const [switchTabs, setSwitchTabs] = useState("changeInputsTab");
+  const [switchTabs, setSwitchTabs] = useState("urlSectionTab");
   const [htmlContent, setHtmlContent] = useState("");
-
-  useEffect(() => {
-    const submitUrlToBackend = async () => {
-      const res = await fetchPost(
-        `${BACKEND_URL}/api/v1/form/fill-form/cm4ljhj7c0000upu81mnoyti6`,
-        {
-          url: validUrl,
-        }
-      );
-      const data = await res.json();
-      if (res.ok) {
-        setHtmlContent(data.content);
-      }
-    };
-
-    submitUrlToBackend();
-  }, [validUrl]);
 
   const [runRefecth, setRunRefetch] = useState(false);
 
   return (
     <div className=" flex  bg-[#191919] w-full px-12 pt-20 overflow-hidden min-h-screen ">
       <InputBars runRefecth={runRefecth} setRunRefetch={setRunRefetch} />
-      {/* <Separator orientation="horizontal" className=" bg-gray-400 w-[2px] h-screen" /> */}
       <div className="text-white flex   flex-row  w-full border-t-[1px]">
         <Tabs defaultValue={switchTabs} className="w-2/4 relative ">
           <TabsList className="px-0 py-0 mt-4 ml-4 ">
@@ -72,7 +54,11 @@ const FormFill = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="urlSectionTab">
-            <UrlSection setValidUrl={setValidUrl} />
+            <UrlSection
+              setValidUrl={setValidUrl}
+              setHtmlContent={setHtmlContent}
+              validUrl={validUrl}
+            />
           </TabsContent>
           <TabsContent value="changeInputsTab">
             <ChangeInputs setRunRefetch={setRunRefetch} />
