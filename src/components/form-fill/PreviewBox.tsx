@@ -1,8 +1,18 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import Loader from "./Loader";
 import { RxCross1 } from "react-icons/rx";
 
-const URLPreviewApp = ({ previewUrl, htmlContent, setValidUrl }) => {
+interface URLPreviewAppTypes {
+  previewUrl: string;
+  htmlContent: string;
+  setValidUrl: React.Dispatch<SetStateAction<string>>;
+}
+
+const URLPreviewApp = ({
+  previewUrl,
+  htmlContent,
+  setValidUrl,
+}: URLPreviewAppTypes) => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (htmlContent) {
@@ -17,8 +27,8 @@ const URLPreviewApp = ({ previewUrl, htmlContent, setValidUrl }) => {
     setValidUrl("");
   };
   return (
-    <div className="w-2/4 h-full  ">
-      <div className="px-2 bg-purple-600 max-w-[10rem] rounded-md m-1 flex  items-center justify-between">
+    <div className="w-2/4 h-full   cursor-not-allowed ">
+      <div className="px-2 bg-purple-600 max-w-[10rem] rounded-md m-1 flex   hide-scrollbar items-center justify-between">
         Preview
         {previewUrl && (
           <div
@@ -32,11 +42,11 @@ const URLPreviewApp = ({ previewUrl, htmlContent, setValidUrl }) => {
 
       {previewUrl ? (
         loading ? (
-          <div className="w-full h-full flex justify-center items-center">
+          <div className="w-full h-full flex justify-center items-center   hide-scrollbarcursor-not-allowed">
             <Loader />
           </div>
         ) : (
-          <div className="h-full">
+          <div className="h-full hide-scrollbar">
             <iframe
               id="url-preview-iframe"
               srcDoc={`<!DOCTYPE html>
@@ -58,7 +68,7 @@ const URLPreviewApp = ({ previewUrl, htmlContent, setValidUrl }) => {
               title="URL Preview"
               width="100%"
               height="500px"
-              className="border-t-2 h-full"
+              className="border-t-2 h-full cursor-not-allowed hide-scrollbar  "
             />
           </div>
         )
@@ -72,6 +82,6 @@ const URLPreviewApp = ({ previewUrl, htmlContent, setValidUrl }) => {
   );
 };
 export default URLPreviewApp;
-
+// form urls for testing
 // https://forms.fillout.com/t/9umvKHN9QFus
 // https://form.jotform.com/243469288393472

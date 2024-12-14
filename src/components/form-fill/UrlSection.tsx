@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { SetStateAction, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
@@ -10,16 +10,22 @@ import {
 } from "@/components/ui/tooltip";
 import { BACKEND_URL } from "@/lib/url";
 import { fetchPost } from "@/lib/utils";
-const UrlSection = ({ setValidUrl, validUrl, setHtmlContent }) => {
-  const [check, setCheck] = useState(false);
 
-  const [url, setUrl] = useState("");
+interface URlSectionTypes {
+  setValidUrl: React.Dispatch<SetStateAction<string>>;
+  setHtmlContent: React.Dispatch<SetStateAction<string>>;
+}
+
+const UrlSection = ({ setValidUrl, setHtmlContent }: URlSectionTypes) => {
+  const [check, setCheck] = useState<boolean>(false);
+
+  const [url, setUrl] = useState<string>("");
 
   const submitUrlToBackend = async () => {
     setValidUrl(url);
-    setHtmlContent("")
+    setHtmlContent("");
     const res = await fetchPost(
-      `${BACKEND_URL}/api/v1/form/fill-form/cm4ljhj7c0000upu81mnoyti6`,
+      `${BACKEND_URL}/api/v1/form/fill-form/cm4mjllj10000up6gczi623ff`,
       {
         url: url,
       }
@@ -27,7 +33,7 @@ const UrlSection = ({ setValidUrl, validUrl, setHtmlContent }) => {
     const data = await res.json();
     if (res.ok) {
       setHtmlContent(data.content);
-      setUrl("")
+      setUrl("");
     }
   };
 

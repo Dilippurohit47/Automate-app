@@ -18,7 +18,7 @@ const fetchUserInfo = async () => {
   return data;
 };
 
-const deleteData = async ({ key, value }) => {
+const deleteData = async ({ key, value }: { key: string; value: string }) => {
   const response = await fetch(
     `${BACKEND_URL}/api/v1/profile/delete-information/cm4mjllj10000up6gczi623ff`,
     {
@@ -36,8 +36,13 @@ const deleteData = async ({ key, value }) => {
   return response;
 };
 
+type SingleObject = {
+  [key: string]: string;
+};
+
+type InputTypes = [SingleObject];
 const UpdateInputs = () => {
-  const [inputs, setInputs] = useState([]);
+  const [inputs, setInputs] = useState<InputTypes>();
 
   const { data } = useQuery(["user-info-for-updates"], fetchUserInfo);
 
@@ -63,7 +68,7 @@ const UpdateInputs = () => {
     },
   });
 
-  const handleDelete = (key, value) => {
+  const handleDelete = (key: string, value: string) => {
     mutation.mutate({ key, value });
   };
   return (
@@ -81,7 +86,7 @@ const UpdateInputs = () => {
         </div>
       </div>
       <div className=" flex flex-col gap-4 max-h-[18rem] hide-scrollbar overflow-y-auto">
-        {inputs.length > 0 ? (
+        {inputs && inputs.length > 0 ? (
           <>
             {Object.keys(inputs[0])?.map((key) => (
               <div key={key} className="flex  items-center gap-5">
@@ -109,7 +114,7 @@ const UpdateInputs = () => {
           "not "
         )}
       </div>
-      {inputs.length > 0 && (
+      {inputs && inputs.length > 0 && (
         <Button className="purple-button mt-3 text-[1.1rem]">update</Button>
       )}
     </div>

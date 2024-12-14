@@ -17,9 +17,10 @@ import { FcGoogle } from "react-icons/fc";
 import { signUp } from "@/app/actions/authActions/authActions";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
+import { DIALOG_STATES } from "@/app/(pages)/auth/page";
 
 interface SignUpProps {
-  setChangeDialog: React.Dispatch<React.SetStateAction<string>>;
+  setChangeDialog: React.Dispatch<React.SetStateAction<DIALOG_STATES>>;
 }
 
 function SignUp({ setChangeDialog }: SignUpProps) {
@@ -32,7 +33,7 @@ function SignUp({ setChangeDialog }: SignUpProps) {
         richColors: true,
         duration: 3000,
       });
-      redirect("/")
+      redirect("/");
     } else {
       toast.error(result?.message, {
         richColors: true,
@@ -86,7 +87,7 @@ function SignUp({ setChangeDialog }: SignUpProps) {
           Already have an account ?{" "}
           <span
             className="text-blue-400 cursor-pointer hover:underline"
-            onClick={() => setChangeDialog("login")}
+            onClick={() => setChangeDialog(DIALOG_STATES.LOGIN)}
           >
             Login
           </span>

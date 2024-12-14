@@ -1,3 +1,4 @@
+import { DIALOG_STATES } from "@/app/(pages)/auth/page";
 import { Login } from "@/app/actions/authActions/authActions";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,7 +17,7 @@ import { FormEvent } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "sonner";
 interface SignUpProps {
-  setChangeDialog: React.Dispatch<React.SetStateAction<string>>;
+  setChangeDialog: React.Dispatch<React.SetStateAction<DIALOG_STATES>>;
 }
 function SignIn({ setChangeDialog }: SignUpProps) {
   const handelSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -26,7 +27,7 @@ function SignIn({ setChangeDialog }: SignUpProps) {
     console.log(result);
     if (result.status == "200") {
       toast.success(result.message);
-      redirect("/")
+      redirect("/");
     } else {
       toast.error(result?.message);
     }
@@ -44,7 +45,7 @@ function SignIn({ setChangeDialog }: SignUpProps) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={(e)=>handelSubmit(e)}>
+        <form onSubmit={(e) => handelSubmit(e)}>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="email">Email</Label>
@@ -61,7 +62,7 @@ function SignIn({ setChangeDialog }: SignUpProps) {
           Don't have an account ?{" "}
           <span
             className="text-blue-400 cursor-pointer hover:underline"
-            onClick={() => setChangeDialog("signup")}
+            onClick={() => setChangeDialog(DIALOG_STATES.SIGNUP)}
           >
             SignUp
           </span>

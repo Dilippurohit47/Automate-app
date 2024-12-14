@@ -13,8 +13,12 @@ import { queryClient } from "@/lib/ReactQuery";
 import { useMutation } from "@tanstack/react-query";
 import { v4 as uuidV4 } from "uuid";
 import UpdateInputs from "./UpdateInputs";
-
-const addInput = async (inputs) => {
+interface Input {
+  id: string;
+  value: string;
+  key: string;
+}
+const addInput = async (inputs: Input[]) => {
   const res = await fetchPost(
     `${BACKEND_URL}/api/v1/profile/save-information/cm4mjllj10000up6gczi623ff`,
     {
@@ -25,7 +29,7 @@ const addInput = async (inputs) => {
 };
 
 const ChangeInputs = ({}: {}) => {
-  const [inputs, setInputs] = useState([]);
+  const [inputs, setInputs] = useState< Input[]>([]);
   const addNewInput = () => {
     if (inputs.length > 4) {
       return toast.error("Save this inputs to add more");
@@ -44,7 +48,7 @@ const ChangeInputs = ({}: {}) => {
       addNewInput();
     }
   }, []);
-console.log(inputs)
+  console.log(inputs);
   const saveInputKeys = (id: string, key: string) => {
     const updatedInputs = inputs.map((input) =>
       input.id === id ? { ...input, key } : input
@@ -52,7 +56,7 @@ console.log(inputs)
     setInputs(updatedInputs);
   };
 
-  const saveInputValues = (id: string, value) => {
+  const saveInputValues = (id: string, value:string) => {
     setInputs((prev) =>
       prev.map((item) => (item.id === id ? { ...item, value } : item))
     );
@@ -87,7 +91,6 @@ console.log(inputs)
     const updatedInputs = inputs.filter((input) => {
       return input.id !== idToDelete;
     });
-
     setInputs(updatedInputs);
   };
 

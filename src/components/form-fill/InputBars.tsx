@@ -4,6 +4,13 @@ import { BACKEND_URL } from "@/lib/url";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
+
+interface SingleObject {
+  [key: string]: string;
+}
+
+type SingleObjectArray = [SingleObject];
+
 const fetchUserInfo = async () => {
   const response = await fetch(
     `${BACKEND_URL}/api/v1/profile/get-information/cm4mjllj10000up6gczi623ff`
@@ -12,39 +19,31 @@ const fetchUserInfo = async () => {
   return data;
 };
 
-const InputBars = ({ runRefecth, setRunRefetch }) => {
-  const { data, refetch } = useQuery(["user-info"], fetchUserInfo);
+const InputBars = () => {
+  const { data } = useQuery(["user-info"], fetchUserInfo);
 
-  const [saveInputs, setSaveInputs] = useState([]);
+  const [saveInputs, setSaveInputs] = useState<SingleObjectArray>();
 
   useEffect(() => {
     if (data) {
       setSaveInputs(data?.data?.information);
     }
   }, [data]);
-
-  useEffect(() => {
-    if (runRefecth) {
-      refetch();
-      setRunRefetch(false);
-    }
-  }, [runRefecth]);
-
-  const [showInputValue, setShowInputValue] = useState();
-
-  const openAccordion = (id) => {
+  const [showInputValue, setShowInputValue] = useState<number | null>();
+  console.log(showInputValue);
+  const openAccordion = (id: number) => {
     if (showInputValue == id) {
       setShowInputValue(null);
     } else {
       setShowInputValue(id);
     }
   };
-
+  console.log(saveInputs);
   return (
     <div className="w-[10rem] overflow-hidden px-2   rounded-md flex flex-col h-[37rem]   bg-[#1a1818]    border-2 rounded-tr-none border-gray-500 py-2">
       <div className="text-slate-500 text-1xl font-semibold ">Saved Data</div>
       <div className="overflow-y-auto  hide-scrollbar">
-        {saveInputs.length > 0 && (
+        {saveInputs && saveInputs.length > 0 && (
           <>
             {Object.keys(saveInputs[0]).map((key, index) => (
               <div
