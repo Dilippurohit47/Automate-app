@@ -13,7 +13,7 @@ type SingleObjectArray = [SingleObject];
 
 const fetchUserInfo = async () => {
   const response = await fetch(
-    `${BACKEND_URL}/api/v1/profile/get-information/cm4mjllj10000up6gczi623ff`
+    `${BACKEND_URL}/api/v1/profile/get-information/cm4pa0vw70000uph4fzxo718d`
   );
   const data = await response.json();
   return data;
@@ -30,7 +30,6 @@ const InputBars = () => {
     }
   }, [data]);
   const [showInputValue, setShowInputValue] = useState<number | null>();
-  console.log(showInputValue);
   const openAccordion = (id: number) => {
     if (showInputValue == id) {
       setShowInputValue(null);
@@ -38,9 +37,8 @@ const InputBars = () => {
       setShowInputValue(id);
     }
   };
-  console.log(saveInputs);
   return (
-    <div className="w-[10rem] overflow-hidden px-2   rounded-md flex flex-col h-[37rem]   bg-[#1a1818]    border-2 rounded-tr-none border-gray-500 py-2">
+    <div className="w-[10rem] overflow-hidden px-2   rounded-md flex flex-col h-[37rem] border-r-0   bg-[#1a1818]    border-2 rounded-tr-none border-gray-500 py-2">
       <div className="text-slate-500 text-1xl font-semibold ">Saved Data</div>
       <div className="overflow-y-auto  hide-scrollbar">
         {saveInputs && saveInputs.length > 0 && (

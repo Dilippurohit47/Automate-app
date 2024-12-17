@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/tooltip";
 import { BACKEND_URL } from "@/lib/url";
 import { fetchPost } from "@/lib/utils";
+import RecentlyUsedUrl from "./RecentlyUsedUrl";
 
 interface URlSectionTypes {
   setValidUrl: React.Dispatch<SetStateAction<string>>;
@@ -25,7 +26,7 @@ const UrlSection = ({ setValidUrl, setHtmlContent }: URlSectionTypes) => {
     setValidUrl(url);
     setHtmlContent("");
     const res = await fetchPost(
-      `${BACKEND_URL}/api/v1/form/fill-form/cm4mjllj10000up6gczi623ff`,
+      `${BACKEND_URL}/api/v1/form/fill-form/cm4pa0vw70000uph4fzxo718d`,
       {
         url: url,
       }
@@ -47,28 +48,31 @@ const UrlSection = ({ setValidUrl, setHtmlContent }: URlSectionTypes) => {
           add all the inputs which your form have
         </p>
 
-        <TooltipProvider delayDuration={200}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div
-                className="  h-6 w-14 py-1 px-1 bg-white rounded-full cursor-pointer flex items-center "
-                onClick={() => setCheck(!check)}
-              >
+        <div className="flex gap-2 items-center ">
+          <TooltipProvider delayDuration={200}>
+            <Tooltip>
+              <TooltipTrigger asChild>
                 <div
-                  className={`bg-gray-400 transition ease-in-out duration-300 h-4 w-4 rounded-full ${
-                    check ? "bg-green-500 translate-x-[200%]" : ""
-                  }`}
-                ></div>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent className="bg-[#1a1818] translate-x-[20%] w-2/4 border-[1px]">
-              <p className="text-white text-[0.9rem] ">
-                Submit the form automatically if you dont want to check after
-                submitting the url
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+                  className="  h-6 w-14 py-1 px-1 bg-white rounded-full cursor-pointer flex items-center "
+                  onClick={() => setCheck(!check)}
+                >
+                  <div
+                    className={`bg-gray-400 transition ease-in-out duration-300 h-4 w-4 rounded-full ${
+                      check ? "bg-green-500 translate-x-[200%]" : ""
+                    }`}
+                  ></div>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent className="bg-[#1a1818] translate-x-[20%] w-2/4 border-[1px]">
+                <p className="text-white text-[0.9rem] ">
+                  Submit the form automatically if you dont want to check after
+                  submitting the url
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <div className="text-[#9CA3AF]">(not recommended)</div>
+        </div>
       </div>
 
       <div className="flex flex-col gap-4">
@@ -86,6 +90,7 @@ const UrlSection = ({ setValidUrl, setHtmlContent }: URlSectionTypes) => {
           Submit
         </Button>
       </div>
+      <RecentlyUsedUrl />
     </div>
   );
 };

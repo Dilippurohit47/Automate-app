@@ -21,8 +21,6 @@ const URLPreviewApp = ({
       setLoading(true);
     }
   }, [htmlContent]);
-  console.log(htmlContent);
-  console.log(loading);
   const removePreview = () => {
     setValidUrl("");
   };

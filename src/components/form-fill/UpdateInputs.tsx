@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Input } from "../ui/input";
+import { queryClient } from "@/lib/ReactQuery";
 import { BACKEND_URL } from "@/lib/url";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Button } from "../ui/button";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { BiSolidGrid } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa6";
 import { toast } from "sonner";
-import { queryClient } from "@/lib/ReactQuery";
+import { Input } from "../ui/input";
 const fetchUserInfo = async () => {
   const response = await fetch(
-    `${BACKEND_URL}/api/v1/profile/get-information/cm4mjllj10000up6gczi623ff`,
+    `${BACKEND_URL}/api/v1/profile/get-information/cm4pa0vw70000uph4fzxo718d`,
     {
       method: "get",
     }
@@ -20,7 +19,7 @@ const fetchUserInfo = async () => {
 
 const deleteData = async ({ key, value }: { key: string; value: string }) => {
   const response = await fetch(
-    `${BACKEND_URL}/api/v1/profile/delete-information/cm4mjllj10000up6gczi623ff`,
+    `${BACKEND_URL}/api/v1/profile/delete-information/cm4pa0vw70000uph4fzxo718d`,
     {
       method: "DELETE",
       headers: {
@@ -114,9 +113,6 @@ const UpdateInputs = () => {
           "not "
         )}
       </div>
-      {inputs && inputs.length > 0 && (
-        <Button className="purple-button mt-3 text-[1.1rem]">update</Button>
-      )}
     </div>
   );
 };

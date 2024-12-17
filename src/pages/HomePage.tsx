@@ -1,3 +1,4 @@
+"use server"
 import { Button } from "@/components/ui/button";
 import { FaArrowRightLong } from "react-icons/fa6";
 import React from "react";

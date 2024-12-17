@@ -20,7 +20,7 @@ interface Input {
 }
 const addInput = async (inputs: Input[]) => {
   const res = await fetchPost(
-    `${BACKEND_URL}/api/v1/profile/save-information/cm4mjllj10000up6gczi623ff`,
+    `${BACKEND_URL}/api/v1/profile/save-information/cm4pa0vw70000uph4fzxo718d`,
     {
       inputs,
     }
@@ -48,7 +48,6 @@ const ChangeInputs = ({}: {}) => {
       addNewInput();
     }
   }, []);
-  console.log(inputs);
   const saveInputKeys = (id: string, key: string) => {
     const updatedInputs = inputs.map((input) =>
       input.id === id ? { ...input, key } : input
