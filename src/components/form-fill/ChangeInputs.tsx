@@ -29,7 +29,7 @@ const addInput = async (inputs: Input[]) => {
 };
 
 const ChangeInputs = ({}: {}) => {
-  const [inputs, setInputs] = useState< Input[]>([]);
+  const [inputs, setInputs] = useState<Input[]>([]);
   const addNewInput = () => {
     if (inputs.length > 4) {
       return toast.error("Save this inputs to add more");
@@ -55,7 +55,7 @@ const ChangeInputs = ({}: {}) => {
     setInputs(updatedInputs);
   };
 
-  const saveInputValues = (id: string, value:string) => {
+  const saveInputValues = (id: string, value: string) => {
     setInputs((prev) =>
       prev.map((item) => (item.id === id ? { ...item, value } : item))
     );
@@ -94,20 +94,20 @@ const ChangeInputs = ({}: {}) => {
   };
 
   return (
-    <div className="text-white w-full px-6 py-6 flex gap-10   flex-col   ">
-      <div className="w-full  ">
+    <div className="text-white w-full px-2  md:px-6 py-6 flex max-md:gap-10   flex-col   ">
+      <div className="w-full">
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
             {" "}
-            <div className="flex    group w-full gap-2 justify-start items-center">
-              <div className="flex   items-center gap-2 text-slate-200  font-semibold w-[39%]">
+            <div className="flex    w group w-full gap-2 md:justify-start items-center">
+              <div className="flex w-full   items-center gap-2 text-slate-200  font-semiboldw-full md:w-[39%]">
                 <BiSolidGrid size={21} className="text-slate-400" />
                 Add new input
               </div>
               <div
-                className="text-center pointer-events-none 
+                className="text-center  hidden  pointer-events-none 
               group-hover:translate-x-[90%] 
-              flex items-center justify-start w-full transition-transform duration-500
+              lg:flex items-center justify-start w-full transition-transform duration-500
               translate-y-[1.5px]
               "
               >
@@ -123,10 +123,13 @@ const ChangeInputs = ({}: {}) => {
           </div>
           <div className="flex flex-col gap-5 mt-4  max-h-[25rem] overflow-y-auto ">
             {inputs.map((input) => (
-              <div key={input.id} className="flex  items-center gap-5">
+              <div
+                key={input.id}
+                className="flex max-md:flex-col  items-center md:gap-5 gap-2"
+              >
                 <Input
                   placeholder="Input name"
-                  className=" w-[45%] text-black capitalize"
+                  className=" md:w-[45%] text-black capitalize"
                   id={`key-${input.id}`}
                   onChange={(e) => saveInputKeys(input.id, e.target.value)}
                   value={input.key}
@@ -135,15 +138,22 @@ const ChangeInputs = ({}: {}) => {
                 <Input
                   id={`value-${input.id}`}
                   placeholder="Input values"
-                  className=" text-black w-[45%] "
+                  className=" text-black md:w-[45%] "
                   onChange={(e) => saveInputValues(input.id, e.target.value)}
                 />
                 <div
-                  className="flex  rounded-full h-[1.35rem] w-[1.35rem] p-1 cursor-pointer justify-center items-center bg-red-400 hover:bg-red-500"
+                  className="md:flex hidden  rounded-full h-[1.35rem] w-[1.35rem] p-1 cursor-pointer justify-center items-center bg-red-400 hover:bg-red-500"
                   onClick={() => deleteInput(input.id)}
                 >
                   <FiMinus size={21} />
                 </div>
+                <Button
+                variant="destructive"
+                  className="flex md:hidden  max-md:w-full"
+                  onClick={() => deleteInput(input.id)}
+                >
+                  Delete
+                </Button>
               </div>
             ))}
           </div>

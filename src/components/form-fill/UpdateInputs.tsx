@@ -71,7 +71,7 @@ const UpdateInputs = () => {
     mutation.mutate({ key, value });
   };
   return (
-    <div className="flex flex-col gap-5 mt-4     ">
+    <div className="flex flex-col md:gap-5 gap-2 mt-4     ">
       <div className="flex    group w-full gap-2 justify-start items-center">
         <div className="flex items-center justify-between w-full ">
           {" "}
@@ -84,7 +84,7 @@ const UpdateInputs = () => {
           </div>
         </div>
       </div>
-      <div className=" flex flex-col gap-4 max-h-[18rem] hide-scrollbar overflow-y-auto">
+      <div className=" flex flex-col md:gap-4 gap-2 max-h-[18rem] hide-scrollbar overflow-y-auto">
         {inputs && inputs.length > 0 ? (
           <>
             {Object.keys(inputs[0])?.map((key) => (
