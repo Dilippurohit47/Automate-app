@@ -20,9 +20,9 @@ const FormFill = () => {
   const [htmlContent, setHtmlContent] = useState<string>("");
 
   return (
-    <div className=" lg:flex  bg-[#191919] w-full lg:px-12 lg:pt-20 pt-10 overflow-hidden min-h-screen ">
+    <div className=" lg:flex  bg-[#191919] w-full lg:px-12 md:pt-20 pt-10 overflow-hidden min-h-screen ">
       {/* <InputBars /> */}
-      <div className="text-white flex flex-col   lg:flex-row  w-full lg:border-t-[1px] lg:border-l-[1px]">
+      <div className="text-white flex flex-col   md:flex-row  w-full md:border-t-[1px] lg:border-l-[1px] border-2">
         <Tabs defaultValue={switchTabs} className="lg:w-2/4 relative ">
           <TabsList className="px-0 py-0 mt-4 ml-4 ">
             <TabsTrigger

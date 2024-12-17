@@ -34,8 +34,8 @@ const RecentlyUsedUrl = () => {
       toast.success("url copied ", {
         duration: 500,
         style: {
-          background: "#27272A", // Your desired background color
-          color: "white", // Text color for better contrast
+          background: "#27272A",
+          color: "white",
         },
       })
     );
@@ -49,21 +49,19 @@ const RecentlyUsedUrl = () => {
             Recently used urls
             <IoLinkSharp className="translate-y-[2px]" />
           </h3>
-          <div className="">
-            <div className="flex flex-col gap-1 mt-4">
-              {recetUrls.map((item) => (
-                <div className="flex gap-4 items-center ">
-                  <h3 className="text-[#c1c1c1]" key={item.id}>
-                    {item.url}
-                  </h3>
-                  <MdOutlineContentCopy
-                    size={13}
-                    className="cursor-pointer"
-                    onClick={() => saveToClipBoard(item.url)}
-                  />
-                </div>
-              ))}
-            </div>
+          <div className="flex flex-col gap-1 mt-4">
+            {recetUrls.map((item) => (
+              <div className="flex gap-4   max-sm:gap-[4px]    items-center max-md:text-[0.85rem]   ">
+                <h3 className="text-[#c1c1c1]   " key={item.id}>
+                  {item.url}
+                </h3>
+                <MdOutlineContentCopy
+                  size={13}
+                  className="cursor-pointer "
+                  onClick={() => saveToClipBoard(item.url)}
+                />
+              </div>
+            ))}
           </div>
         </div>
       )}

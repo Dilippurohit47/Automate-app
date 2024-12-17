@@ -39,9 +39,9 @@ const UrlSection = ({ setValidUrl, setHtmlContent }: URlSectionTypes) => {
   };
 
   return (
-    <div className="w-full h-full px-6 py-6 flex flex-col gap-12  ">
+    <div className="w-full h-full lg:px-6 px-3 py-6 flex flex-col gap-12  ">
       <div className=" flex flex-col gap-4 max-w-[20rem]">
-        <p className="  text-gray-400  text-[1rem]">
+        <p className="  text-gray-400  text-[1rem]  ">
           If your form had multiple input which are not saved inputs/values in
           your sidebar (saved inputs ) then click on{" "}
           <span className="text-white underline"> change inputs </span>tab and
@@ -80,11 +80,11 @@ const UrlSection = ({ setValidUrl, setHtmlContent }: URlSectionTypes) => {
           placeholder="Form url"
           type="url "
           value={url}
-          className="text-black"
+          className="text-black max-md:max-w-[25rem]"
           onChange={(e) => setUrl(e.target.value)}
         />
         <Button
-          className="bg-blue-600 hover:bg-blue-700"
+          className="bg-blue-600 hover:bg-blue-700 max-md:max-w-[25rem]"
           onClick={submitUrlToBackend}
         >
           Submit
